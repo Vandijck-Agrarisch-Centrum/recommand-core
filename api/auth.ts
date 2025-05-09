@@ -1,6 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
-import { createUser, getCurrentUser, getUsers } from "data/users";
+import { createUser, getCurrentUser, getUsers, type UserWithoutPassword } from "data/users";
 import { createSession, deleteSession } from "lib/session";
 import { actionFailure, actionSuccess } from "@recommand/lib/utils";
 import { Server } from "@recommand/lib/api";
@@ -136,8 +136,8 @@ const teams = server.get("/auth/teams", requireAuth(), async (c) => {
 
 const getUsersEndpoint = server.get("/auth/users", requireAuth(), async (c) => {
   try {
-    const usersWithoutPassword = await getUsers();
-    return c.json(actionSuccess({ data: usersWithoutPassword }));
+    const usersWithoutPassword: UserWithoutPassword[] = await getUsers();
+    return c.json(actionSuccess({ usersWithoutPassword }));
   } catch (e) {
     console.error(e);
     return c.json(actionFailure("Internal server error"), 500);

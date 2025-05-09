@@ -6,7 +6,18 @@ import { eq, getTableColumns } from "drizzle-orm";
 import type { Context } from "@recommand/lib/api";
 import { teamMembers, teams } from "@core/db/schema";
 
-export type UserWithoutPassword = Omit<typeof users.$inferSelect, "password">;
+export type UserWithoutPassword = Omit<typeof users.$inferSelect, "passwordHash" | "resetToken" | "resetTokenExpires">;
+
+export const getUsers = async (): Promise<UserWithoutPassword[]> => {
+  return await db.select({
+    id: users.id,
+    name: users.name,
+    email: users.email,
+    isAdmin: users.isAdmin,
+    createdAt: users.createdAt,
+    updatedAt: users.updatedAt,
+  }).from(users);
+};
 
 export const getCurrentUser = async (c: Context) => {
   // Verify user's session

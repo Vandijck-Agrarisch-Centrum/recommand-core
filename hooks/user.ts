@@ -1,6 +1,7 @@
 import { useUserStore } from "@core/lib/user-store";
+import type { UserWithoutPassword } from "@core/data/users";
 
-export function useUser() {
+export function useUser(): UserWithoutPassword | null {
   return useUserStore(x => x.user);
 }
 

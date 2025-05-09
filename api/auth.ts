@@ -1,6 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
-import { createUser, getCurrentUser } from "data/users";
+import { createUser, getCurrentUser, getUsers } from "data/users";
 import { createSession, deleteSession } from "lib/session";
 import { actionFailure, actionSuccess } from "@recommand/lib/utils";
 import { Server } from "@recommand/lib/api";
@@ -134,6 +134,16 @@ const teams = server.get("/auth/teams", requireAuth(), async (c) => {
   }
 });
 
+const getUsersEndpoint = server.get("/auth/users", requireAuth(), async (c) => {
+  try {
+    const usersWithoutPassword = await getUsers();
+    return c.json(actionSuccess({ data: usersWithoutPassword }));
+  } catch (e) {
+    console.error(e);
+    return c.json(actionFailure("Internal server error"), 500);
+  }
+});
+
 const createTeamEndpoint = server.post(
   "/auth/teams",
   requireAuth(),
@@ -162,6 +172,6 @@ const createTeamEndpoint = server.post(
   }
 );
 
-export type Auth = typeof login | typeof signup | typeof logout | typeof me | typeof teams | typeof createTeamEndpoint;
+export type Auth = typeof login | typeof signup | typeof logout | typeof me | typeof teams | typeof getUsersEndpoint | typeof createTeamEndpoint;
 
 export default server; 

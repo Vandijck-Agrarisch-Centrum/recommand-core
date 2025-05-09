@@ -14,11 +14,13 @@ import { TableContainer } from "../table-container";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   table: TanstackTable<TData>;
+  summaryRow?: React.ReactNode;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   table,
+  summaryRow,
 }: DataTableProps<TData, TValue>) {
   return (
     <TableContainer>
@@ -32,7 +34,7 @@ export function DataTable<TData, TValue>({
                     key={header.id}
                     style={
                       header.column.columnDef.size &&
-                      header.column.columnDef.size !==
+                        header.column.columnDef.size !==
                         table._getDefaultColumnDef().size
                         ? { width: `${header.column.columnDef.size}px` }
                         : undefined
@@ -41,9 +43,9 @@ export function DataTable<TData, TValue>({
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                   </TableHead>
                 );
               })}
@@ -52,27 +54,30 @@ export function DataTable<TData, TValue>({
         </TableHeader>
         <TableBody>
           {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell
-                    key={cell.id}
-                    style={
-                      cell.column.columnDef.size &&
-                      cell.column.columnDef.size !==
-                        table._getDefaultColumnDef().size
-                        ? { width: `${cell.column.columnDef.size}px` }
-                        : undefined
-                    }
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
+            <>
+              {table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell
+                      key={cell.id}
+                      style={
+                        cell.column.columnDef.size &&
+                          cell.column.columnDef.size !==
+                          table._getDefaultColumnDef().size
+                          ? { width: `${cell.column.columnDef.size}px` }
+                          : undefined
+                      }
+                    >
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+              {summaryRow}
+            </>
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">

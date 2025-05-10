@@ -1,4 +1,4 @@
-import { zValidator } from "@hono/zod-validator";
+import { zValidator } from "@recommand/lib/api";
 import { z } from "zod";
 import { createUser, getCurrentUser, getUsers, type UserWithoutPassword } from "data/users";
 import { createSession, deleteSession } from "lib/session";

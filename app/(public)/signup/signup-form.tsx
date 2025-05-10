@@ -30,8 +30,8 @@ export default function SignupForm({
       await signup(email, password);
       navigate("/");
     } catch (error) {
-      toast.error("Signup failed", {
-        description: error instanceof Error ? error.message : "An unexpected error occurred",
+      toast.error("Registratie mislukt", {
+        description: error instanceof Error ? error.message : "Er is een onverwachte fout opgetreden",
       });
     }
   };
@@ -40,21 +40,28 @@ export default function SignupForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Sign up</CardTitle>
-          <CardDescription>
-            Enter your email below to create your account
+          <img
+            src="/logo.svg"
+            alt="Vandijck Agrarisch Centrum"
+            width={100}
+            height={100}
+            className="mb-6"
+          />
+          <CardTitle className="text-2xl">Maak een account</CardTitle>
+          <CardDescription className="text-balance">
+            Voer je e-mailadres en wachtwoord in om een account te maken.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">E-mailadres</Label>
                 <Input
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder="E-mailadres"
                   required
                   tabIndex={1}
                   value={email}
@@ -62,9 +69,10 @@ export default function SignupForm({
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">Wachtwoord</Label>
                 <PasswordInput 
                   name="password" 
+                  placeholder="Wachtwoord"
                   required 
                   tabIndex={2}
                   value={password}
@@ -72,17 +80,17 @@ export default function SignupForm({
                 />
               </div>
               <Button type="submit" className="w-full" tabIndex={3}>
-                Sign up
+                Maak een account
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              Already have an account?{" "}
+              Heb je al een account?{" "}
               <a
                 href="/login"
                 className="underline underline-offset-4"
                 tabIndex={4}
               >
-                Login
+                Aanmelden
               </a>
             </div>
           </form>

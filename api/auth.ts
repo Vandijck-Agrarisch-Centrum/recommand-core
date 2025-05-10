@@ -78,7 +78,8 @@ const signup = server.post(
 
       // Create default team
       await createTeam(user.id, {
-        name: "My Team",
+        name: "Mijn Boerderij",
+        teamDescription: "",
       });
 
       // Create session

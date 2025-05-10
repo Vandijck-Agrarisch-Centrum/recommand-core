@@ -13,7 +13,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@core/components/ui/sidebar";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ButtonLink } from "@core/components/ui/button";
 import { useUserStore } from "@core/lib/user-store";
 
@@ -96,11 +96,39 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher
-          teams={teams}
-          activeTeam={activeTeam}
-          setActiveTeam={setActiveTeam}
-        />
+        <Link to="/">
+          <div className="flex items-center gap-2 p-2 group-data-[collapsible=icon]:p-0">
+            <div className="flex aspect-square items-center justify-center">
+              <img 
+                alt="Vandijck Agrarisch Centrum" 
+                src="/logo.svg"
+                width={36}
+                height={36}
+                className="group-data-[collapsible=icon]:hidden"
+              />
+              <img 
+                alt="Vandijck Agrarisch Centrum" 
+                src="/favicon.svg"
+                width={36}
+                height={36}
+                className="hidden group-data-[collapsible=icon]:block"
+              />
+            </div>
+            <div className="grid flex-1 text-left text-[#002E99] text-sm leading-tight ml-2 text-nowrap group-data-[collapsible=icon]:hidden">
+              <span className="font-bold">Vandijck<br />
+                <span className="font-normal">Agrarisch Centrum</span>
+              </span>
+            </div>
+          </div>
+        </Link>
+        
+        {teams.length > 1 && (
+          <TeamSwitcher
+            teams={teams}
+            activeTeam={activeTeam}
+            setActiveTeam={setActiveTeam}
+          />
+        )}
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={defaultItems} />

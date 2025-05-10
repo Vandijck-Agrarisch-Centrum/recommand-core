@@ -30,8 +30,8 @@ export function LoginForm({
       await login(email, password);
       navigate("/");
     } catch (error) {
-      toast.error("Login failed", {
-        description: error instanceof Error ? error.message : "An unexpected error occurred",
+      toast.error("Aanmelden mislukt", {
+        description: error instanceof Error ? error.message : "Er is een onverwachte fout opgetreden",
       });
     }
   };
@@ -40,21 +40,28 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
+          <img
+            src="/logo.svg"
+            alt="Vandijck Agrarisch Centrum"
+            width={100}
+            height={100}
+            className="mb-6"
+          />
+          <CardTitle className="text-2xl">Meld je aan</CardTitle>
+          <CardDescription className="text-balance">
+            Voer je e-mailadres en wachtwoord in om je aan te melden.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">E-mailadres</Label>
                 <Input
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder="E-mailadres"
                   required
                   tabIndex={1}
                   value={email}
@@ -63,35 +70,36 @@ export function LoginForm({
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                  <a
+                  <Label htmlFor="password">Wachtwoord</Label>
+                  {/* <a
                     href="/forgot-password"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                     tabIndex={5}
                   >
-                    Forgot your password?
-                  </a>
+                    Wachtwoord vergeten?
+                  </a> */}
                 </div>
-                <PasswordInput 
-                  name="password" 
-                  required 
+                <PasswordInput
+                  name="password"
+                  placeholder="Wachtwoord"
+                  required
                   tabIndex={2}
                   value={password}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                 />
               </div>
               <Button type="submit" className="w-full" tabIndex={3}>
-                Login
+                Aanmelden
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{" "}
+              Heb je nog geen account?{" "}
               <a
                 href="/signup"
                 className="underline underline-offset-4"
                 tabIndex={4}
               >
-                Sign up
+                Maak er een aan.
               </a>
             </div>
           </form>

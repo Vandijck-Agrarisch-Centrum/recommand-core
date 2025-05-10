@@ -35,14 +35,14 @@ export default function Main({ children }: { children: React.ReactNode }) {
 
         registerMenuItem({
             id: 'user.session.logout',
-            title: 'Logout',
+            title: 'Afmelden',
             icon: LogOut,
             onClick: async () => {
                 try {
                     await logout();
-                    toast.success("Logged out successfully");
+                    toast.success("Succesvol afgemeld");
                 } catch (error) {
-                    toast.error("Failed to log out");
+                    toast.error("Afmelden mislukt");
                 }
             }
         });

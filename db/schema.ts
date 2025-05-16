@@ -17,10 +17,10 @@ export const users = pgTable("users", {
   email: text("email").notNull().unique(),
   passwordHash: text("password_hash").notNull(),
   resetToken: text("reset_token"),
-  resetTokenExpires: timestamp("reset_token_expires"),
+  resetTokenExpires: timestamp("reset_token_expires", { mode: "date", withTimezone: true }),
   isAdmin: boolean("is_admin").default(false).notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { mode: "string" })
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { mode: "string", withTimezone: true })
     .defaultNow()
     .notNull()
     .$onUpdate(() => sql`now()`),
@@ -32,8 +32,8 @@ export const teams = pgTable("teams", {
     .$defaultFn(() => "team_" + ulid()),
   name: text("name").notNull(),
   teamDescription: text("team_description").notNull().default("Developer"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { mode: "string" })
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { mode: "string", withTimezone: true })
     .defaultNow()
     .notNull()
     .$onUpdate(() => sql`now()`),
@@ -44,8 +44,8 @@ export const teamMembers = pgTable(
   {
     teamId: text("team_id").references(() => teams.id),
     userId: text("user_id").references(() => users.id),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
-    updatedAt: timestamp("updated_at", { mode: "string" })
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { mode: "string", withTimezone: true })
       .defaultNow()
       .notNull()
       .$onUpdate(() => sql`now()`),
@@ -61,8 +61,8 @@ export const apiKeys = pgTable("api_keys", {
   teamId: text("team_id").references(() => teams.id).notNull(),
   userId: text("user_id").references(() => users.id).notNull(),
   secretHash: text("secret_hash").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { mode: "string" })
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { mode: "string", withTimezone: true })
     .defaultNow()
     .notNull()
     .$onUpdate(() => sql`now()`),
@@ -74,8 +74,8 @@ export const completedOnboardingSteps = pgTable("completed_onboarding_steps", {
   userId: text("user_id").references(() => users.id).notNull(),
   teamId: text("team_id").references(() => teams.id),
   stepId: text("step_id").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { mode: "string" })
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { mode: "string", withTimezone: true })
     .defaultNow()
     .notNull()
     .$onUpdate(() => sql`now()`),

@@ -37,6 +37,7 @@ export function DataTable<TData, TValue>({
     <div className="space-y-4">
       {isGlobalFilterEnabled && (
         <Input
+          autoFocus={true}
           placeholder={globalFilterPlaceholder}
           value={globalFilter}
           onChange={(e) => {
